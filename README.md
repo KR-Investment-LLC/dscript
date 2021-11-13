@@ -1,2 +1,2 @@
 # dscript
-Detroit Script ETH Crypto
+Detroit Script ETH based Crypto
