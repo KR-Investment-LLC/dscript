@@ -1,19 +1,17 @@
-pragma solidity 0.6.6;
+pragma solidity 0.7.3;
 
 // ----------------------------------------------------------------------------
-// 'GGMToken' token contract
+// 'Detroit Community Script' token contract
 //
-// Deployed to : 0xcA401f11548457B3347589E59dfa770a3B800821
+// Deployed to : 0x64c0DDea6838D26c98F8411eBd37F078c80D464A
 // Symbol      : DSCRIPT
-// Name        : Detroit Script
-// Total supply: 100000000
+// Name        : Detroit Community Script
+// Total supply: 1000000000
 // Decimals    : 18
 //
-// Enjoy.
-//
-// (c) by Ahiwe Onyebuchi Valentine.
+// SPDX-License-Identifier: MIT
+// Author: Robert Murrell
 // ----------------------------------------------------------------------------
-
 
 // ----------------------------------------------------------------------------
 // Safe maths
@@ -37,7 +35,6 @@ contract SafeMath {
     }
 }
 
-
 // ----------------------------------------------------------------------------
 // ERC Token Standard #20 Interface
 // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
@@ -54,7 +51,6 @@ abstract contract ERC20Interface {
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
-
 // ----------------------------------------------------------------------------
 // Contract function to receive approval and execute function in one call
 //
@@ -63,7 +59,6 @@ abstract contract ERC20Interface {
 abstract contract ApproveAndCallFallBack {
     function receiveApproval(address from, uint256 tokens, address token, bytes memory data) virtual public;
 }
-
 
 // ----------------------------------------------------------------------------
 // Owned contract
@@ -74,7 +69,7 @@ contract Owned {
 
     event OwnershipTransferred(address indexed _from, address indexed _to);
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
     }
 
@@ -94,12 +89,11 @@ contract Owned {
     }
 }
 
-
 // ----------------------------------------------------------------------------
 // ERC20 Token, with the addition of symbol, name and decimals and assisted
 // token transfers
 // ----------------------------------------------------------------------------
-contract DetroitScript is ERC20Interface, Owned, SafeMath {
+contract DetroitCommunityScript is ERC20Interface, Owned, SafeMath {
     string public symbol;
     string public  name;
     uint8 public decimals;
@@ -108,19 +102,17 @@ contract DetroitScript is ERC20Interface, Owned, SafeMath {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
-
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
-    constructor() public {
+    constructor() {
         symbol = "DSCRIPT";
-        name = "Detroit Script";
+        name = "Detroit Community Script";
         decimals = 18;
-        _totalSupply = 100000000000000000000000000;
-        balances[0xcA401f11548457B3347589E59dfa770a3B800821] = _totalSupply;
-        emit Transfer(address(0), 0xcA401f11548457B3347589E59dfa770a3B800821, _totalSupply);
+        _totalSupply = 1000000000000000000000000000;
+        balances[0x64c0DDea6838D26c98F8411eBd37F078c80D464A] = _totalSupply;
+        emit Transfer(address(0), 0x64c0DDea6838D26c98F8411eBd37F078c80D464A, _totalSupply);
     }
-
 
     // ------------------------------------------------------------------------
     // Total supply
@@ -129,14 +121,12 @@ contract DetroitScript is ERC20Interface, Owned, SafeMath {
         return _totalSupply - balances[address(0)];
     }
 
-
     // ------------------------------------------------------------------------
     // Get the token balance for account tokenOwner
     // ------------------------------------------------------------------------
     function balanceOf(address tokenOwner) public override view returns (uint balance) {
         return balances[tokenOwner];
     }
-
 
     // ------------------------------------------------------------------------
     // Transfer the balance from token owner's account to to account
@@ -149,7 +139,6 @@ contract DetroitScript is ERC20Interface, Owned, SafeMath {
         emit Transfer(msg.sender, to, tokens);
         return true;
     }
-
 
     // ------------------------------------------------------------------------
     // Token owner can approve for spender to transferFrom(...) tokens
@@ -164,7 +153,6 @@ contract DetroitScript is ERC20Interface, Owned, SafeMath {
         emit Approval(msg.sender, spender, tokens);
         return true;
     }
-
 
     // ------------------------------------------------------------------------
     // Transfer tokens from the from account to the to account
@@ -183,7 +171,6 @@ contract DetroitScript is ERC20Interface, Owned, SafeMath {
         return true;
     }
 
-
     // ------------------------------------------------------------------------
     // Returns the amount of tokens approved by the owner that can be
     // transferred to the spender's account
@@ -191,7 +178,6 @@ contract DetroitScript is ERC20Interface, Owned, SafeMath {
     function allowance(address tokenOwner, address spender) public override view returns (uint remaining) {
         return allowed[tokenOwner][spender];
     }
-
 
     // ------------------------------------------------------------------------
     // Token owner can approve for spender to transferFrom(...) tokens
@@ -204,15 +190,6 @@ contract DetroitScript is ERC20Interface, Owned, SafeMath {
         ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, address(this), data);
         return true;
     }
-
-
-    // ------------------------------------------------------------------------
-    // Don't accept ETH
-    // ------------------------------------------------------------------------
-    // function () external payable {
-    //     revert();
-    // }
-
 
     // ------------------------------------------------------------------------
     // Owner can transfer out any accidentally sent ERC20 tokens
